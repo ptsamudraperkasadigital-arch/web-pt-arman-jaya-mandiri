@@ -61,10 +61,48 @@ export default function App() {
 
   // SEO meta tags + favicon
   useEffect(() => {
-    document.title = 'PT ARMAN JAYA MANDIRI – Mitra Industri Pertambangan Balikpapan';
-    let meta = document.querySelector<HTMLMetaElement>('meta[name="description"]');
-    if (!meta) { meta = document.createElement('meta'); meta.name = 'description'; document.head.appendChild(meta); }
-    meta.content = 'PT ARMAN JAYA MANDIRI – perusahaan berbasis di Balikpapan, Kalimantan Timur, bergerak di bidang pemompaan tambang, transportasi, reparasi mesin, dan perdagangan umum.';
+    const SITE_URL = 'https://armanjayamandiri.com';
+    const TITLE = 'PT ARMAN JAYA MANDIRI – Mitra Industri Pertambangan Balikpapan';
+    const DESC = 'PT ARMAN JAYA MANDIRI, perusahaan berbasis di Balikpapan, Kalimantan Timur. Layanan jasa pemompaan tambang, transportasi, reparasi mesin, dan perdagangan umum untuk industri & proyek.';
+    const KEYWORDS = 'PT Arman Jaya Mandiri, jasa pemompaan tambang, transportasi tambang, reparasi mesin industri, perdagangan umum, Balikpapan, Kalimantan Timur, kontraktor tambang, pompa lumpur';
+
+    document.title = TITLE;
+
+    const setMeta = (name: string, content: string, prop = false) => {
+      const attr = prop ? 'property' : 'name';
+      let el = document.querySelector<HTMLMetaElement>(`meta[${attr}="${name}"]`);
+      if (!el) { el = document.createElement('meta'); el.setAttribute(attr, name); document.head.appendChild(el); }
+      el.content = content;
+    };
+
+    // Basic SEO
+    setMeta('description', DESC);
+    setMeta('keywords', KEYWORDS);
+    setMeta('author', 'PT ARMAN JAYA MANDIRI');
+    setMeta('robots', 'index, follow');
+
+    // Google Search Console
+    setMeta('google-site-verification', 'BiiVukHcAMAheuLCqeRalx-2BUSBymliRVRggphmiuI');
+
+    // Open Graph (Facebook, LinkedIn, WhatsApp preview)
+    setMeta('og:type', 'website', true);
+    setMeta('og:url', SITE_URL, true);
+    setMeta('og:title', TITLE, true);
+    setMeta('og:description', DESC, true);
+    setMeta('og:image', `${SITE_URL}/og-image.png`, true);
+    setMeta('og:locale', 'id_ID', true);
+    setMeta('og:site_name', 'PT ARMAN JAYA MANDIRI', true);
+
+    // Twitter Card
+    setMeta('twitter:card', 'summary_large_image');
+    setMeta('twitter:title', TITLE);
+    setMeta('twitter:description', DESC);
+    setMeta('twitter:image', `${SITE_URL}/og-image.png`);
+
+    // Canonical URL
+    let canonical = document.querySelector<HTMLLinkElement>('link[rel="canonical"]');
+    if (!canonical) { canonical = document.createElement('link'); canonical.rel = 'canonical'; document.head.appendChild(canonical); }
+    canonical.href = SITE_URL;
 
     // Favicon
     let link = document.querySelector<HTMLLinkElement>('link[rel="icon"]');
